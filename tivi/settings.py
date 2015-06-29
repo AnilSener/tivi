@@ -211,7 +211,7 @@ os.environ['JAVA_HOME']="/usr/jdk64/jdk1.7.0_67/jre/"
 
 # Append pyspark  to Python Path
 sys.path.append("/opt/cloudera/parcels/CDH-5.3.0-1.cdh5.3.0.p0.30/lib/spark/python")
-
+"""
 try:
     from pyspark import SparkContext,SparkConf
     from pyspark.streaming import StreamingContext
@@ -219,7 +219,7 @@ try:
 
 except ImportError as e:
     print ("Can not import Spark Modules", e)
-    sys.exit(1)
+    sys.exit(1)"""
 
 
 ######

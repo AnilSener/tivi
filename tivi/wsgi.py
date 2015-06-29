@@ -30,3 +30,6 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+from tiviapp.apis import twitter_streaming
+
+twitter_streaming.executeStreaming()

@@ -1,2 +1,0 @@
-import twitter_streaming
-twitter_streaming.executeStreaming()
