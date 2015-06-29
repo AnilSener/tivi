@@ -12,7 +12,7 @@ consumer_secret="aWNRzh74LUT1fuW35y6VzRDtvuimQ4LjFGMnMMkEXI0Y9LSpkf"
 access_token="258113369-63Y2Cqr9q0Bo02WU4AS8Bjiv3JnHP2Us7HimK26G"
 access_token_secret="Z4Sf9EyLbOJ4jPI5WlZPZUyv3OwluuZXiKXn0pamk8Dly"
 auth = requests_oauthlib.OAuth1(consumer_key, consumer_secret,access_token,access_token_secret)
-# url = 'https://stream.twitter.com/1.1/statuses/filter.json'
+url = 'https://stream.twitter.com/1.1/statuses/filter.json'
 ###################################################################
 
 
@@ -43,7 +43,7 @@ def stream_twitter_data():
     This is the returned response from the GET request on the twitter endpoint
     """
     data = [('language', 'en'), ('locations', '-130,20,-60,50')]
-    query_url = config.url + '?' + '&'.join([str(t[0]) + '=' + str(t[1]) for t in data])
+    query_url = url + '?' + '&'.join([str(t[0]) + '=' + str(t[1]) for t in data])
     response = requests.get(query_url, auth=auth, stream=True)
     print(query_url, response) # 200 <OK>
     count = 0
