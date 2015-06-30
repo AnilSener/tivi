@@ -5,7 +5,7 @@ from django.db import models as dbmodels
 
 # Create your models here.
 class TweetNode(models.NodeModel):
-    tweetID= models.IntegerProperty()
+    tweetID= models.StringProperty()
     in_reply_to_status_id=models.IntegerProperty()
     owner = models.Relationship('TwitterUser',rel_type='tweeted_by',related_name="tweets")
     objectID=models.StringProperty()
@@ -13,27 +13,25 @@ class TweetNode(models.NodeModel):
     replies = models.Relationship('self',rel_type='replied_as')
     retweets = models.Relationship('self',rel_type='retweeted_as')
 
-class Tweet(Document):
-    tweetID= LongField()
+class Place(EmbeddedDocument):
     geometry = PolygonField()
     geopoint = GeoPointField()
-    timestamp = DateTimeField()
     placeId = StringField()
     placeFullName = StringField()
     placeName = StringField()
     countryCode = StringField()
     placeType = StringField()
+    
+class Tweet(Document):
+    #_id = ObjectIdField()
+    tweetID= StringField(primary_key=True)
     language = StringField()
     text = StringField()
-    cleaned_text = StringField()
-    createdAt = DateTimeField()
+    location= EmbeddedDocumentField('Place')
     isRetweeted = BooleanField()
     isFavorited = BooleanField()
     retweetCount = LongField()
     favoriteCount = LongField()
-    trends = ListField()
-    symbols = ListField()
-    urls = ListField()
     twitteruser = ReferenceField("TwitterUser")
 
 
@@ -49,3 +47,8 @@ class TwitterUser(models.NodeModel):
     language = models.StringProperty()
     #account = models.Relationship('Subscriber',rel_type='owns',related_name="twitterusers")
     follower = models.Relationship('self', rel_type='follows',related_name='followed_by')
+
+class HashTag(models.NodeModel):
+    tag = models.StringProperty()
+    tweets = models.Relationship('TweetNode',rel_type='tagged_in',related_name="hashtags")
+    users = models.Relationship('TwitterUser',rel_type='tagged_for',related_name="hashtags")
