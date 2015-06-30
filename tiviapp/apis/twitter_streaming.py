@@ -46,6 +46,13 @@ def stream_twitter_data():
     :param response: requests response object
     This is the returned response from the GET request on the twitter endpoint
     """
+    keywords=ProgrammeTopics.objects.values_list("name")
+    print keywords
+    comma_sep_list=""
+    for i,user in enumerate(keywords):
+        comma_sep_list+=user.userID+", " if i<len(keywords)-1 else user.userID
+    print(comma_sep_list)
+
     data = [('language', 'en'), ('locations', '-130,20,-60,50')]
     query_url = url + '?' + '&'.join([str(t[0]) + '=' + str(t[1]) for t in data])
     response = requests.get(query_url, auth=auth, stream=True)

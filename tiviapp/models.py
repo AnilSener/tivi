@@ -52,3 +52,10 @@ class HashTag(models.NodeModel):
     tag = models.StringProperty()
     tweets = models.Relationship('TweetNode',rel_type='tagged_in',related_name="hashtags")
     users = models.Relationship('TwitterUser',rel_type='tagged_for',related_name="hashtags")
+
+class ProgrammeTopics(models.NodeModel):
+    topic = models.StringProperty()
+    programmes = models.Relationship('Programme',rel_type='is_related_to',related_name="topics")
+
+class Programme(models.NodeModel):
+    name = models.StringProperty()
