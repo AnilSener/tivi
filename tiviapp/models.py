@@ -53,9 +53,27 @@ class HashTag(models.NodeModel):
     tweets = models.Relationship('TweetNode',rel_type='tagged_in',related_name="hashtags")
     users = models.Relationship('TwitterUser',rel_type='tagged_for',related_name="hashtags")
 
-class ProgrammeTopics(models.NodeModel):
+class Topic(models.NodeModel):
     topic = models.StringProperty()
     programmes = models.Relationship('Programme',rel_type='is_related_to',related_name="topics")
 
 class Programme(models.NodeModel):
     name = models.StringProperty()
+
+
+class Show(Document):
+    id = StringField(primary_key=True)
+    url = StringField()
+    summary = StringField()
+    name = StringField()
+    type = StringField()
+    genres = LineStringField()
+    number = StringField()
+    runtime = StringField()
+    image = StringField()
+    airdate = DateTimeField()
+    #airstamp = StringField()
+    season = StringField()
+    show = StringField()
+    airtime = StringField()
+    links = LineStringField()
