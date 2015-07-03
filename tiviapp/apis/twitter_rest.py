@@ -1,6 +1,6 @@
 __author__ = 'anil'
 from twython import TwythonStreamer,Twython,TwythonError
-from tivi import celery_app
+from tivi.celery import app
 from tiviapp.models import *
 import time
 ####################################################################
@@ -11,7 +11,7 @@ access_token="258113369-63Y2Cqr9q0Bo02WU4AS8Bjiv3JnHP2Us7HimK26G"
 access_token_secret="Z4Sf9EyLbOJ4jPI5WlZPZUyv3OwluuZXiKXn0pamk8Dly"
 ###################################################################
 twitter = Twython(consumer_key, consumer_secret,access_token,access_token_secret)
-@celery_app.task()
+@app.task()
 def exec_User_Follows():
     twitter_users=TwitterUser.objects.all()
     if len(twitter_users)==0:

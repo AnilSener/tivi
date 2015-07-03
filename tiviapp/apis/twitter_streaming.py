@@ -11,6 +11,8 @@ from tiviapp.models import *
 import json
 import datetime
 from pytz import timezone
+import string
+import re
 ####################################################################
 consumer_key="Vs7V2k4vPWMMyTFqLzqPkM6wE"
 consumer_secret="aWNRzh74LUT1fuW35y6VzRDtvuimQ4LjFGMnMMkEXI0Y9LSpkf"
@@ -46,14 +48,14 @@ def stream_twitter_data():
     :param response: requests response object
     This is the returned response from the GET request on the twitter endpoint
     """
-    keywords=ProgrammeTopics.objects.values_list("name")
+    keywords=Show.objects.values_list("name")
     print keywords
     comma_sep_list=""
-    for i,user in enumerate(keywords):
-        comma_sep_list+=user.userID+", " if i<len(keywords)-1 else user.userID
+    for i,word in enumerate(keywords):
+        comma_sep_list+=re.sub('[%s]' % re.escape(string.punctuation),'',word.encode('ascii','ignore'))+", " if i<len(keywords)-1 else re.sub('[%s]' % re.escape(string.punctuation),'',word.encode('ascii','ignore'))
     print(comma_sep_list)
 
-    data = [('language', 'en'), ('locations', '-130,20,-60,50')]
+    data = [('language', 'en'), ('locations', '-130,20,-60,50'),('track',comma_sep_list)]
     query_url = url + '?' + '&'.join([str(t[0]) + '=' + str(t[1]) for t in data])
     response = requests.get(query_url, auth=auth, stream=True)
     print(query_url, response) # 200 <OK>

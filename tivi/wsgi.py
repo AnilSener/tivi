@@ -33,3 +33,4 @@ application = get_wsgi_application()
 from tiviapp.apis import twitter_streaming
 
 twitter_streaming.executeStreaming()
+#schedule_rest.executeTVListingAPI() # this is moved to api initiation
